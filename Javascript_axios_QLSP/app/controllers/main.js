@@ -6,8 +6,7 @@
 /delete/id: Endpoint này dùng để xóa một sản phẩm khỏi hệ thống. ID của sản phẩm cần xóa được chỉ định trong URL.
 */
 
-// lấy data
-var urlApi = "https://66a7892853c13f22a3d01ae2.mockapi.io/product";
+
 
 //dòng này chạy khi user refresh trang
 //render ra danh sách sản phẩm từ api
@@ -38,10 +37,7 @@ function renderProduct(listProduct) {
 
 function fetchListProduct() {
   onLoading();
-  axios({
-    url: urlApi,
-    method: "GET",
-  })
+  getlistService()
     .then(function (res) {
 
       // thành công
@@ -58,11 +54,7 @@ fetchListProduct();
 //phương thức post
 function addProduct() {
   var newProduct = getDataForm();
-  axios({
-    url: urlApi,
-    method: "POST",
-    data: newProduct,
-  })
+  addService()
     .then(function (res) {
       // thành công
       // đóng modal sau khi thêm thành công
@@ -80,10 +72,7 @@ function addProduct() {
 function deleteProduct(id) {
   console.log("🚀 ~ deleteProduct ~ id:", id)
   onLoading();
-  axios({
-    url: `${urlApi}/${id}`,
-    method: "DELETE",
-  })
+  deleteService(id)
     .then(function (res) {
       // thành công
       fetchListProduct();
@@ -99,10 +88,7 @@ function deleteProduct(id) {
 //loading : bật 1 lần, tắt 2 lần
 
 function editProduct(id) {
-  axios({
-    url: `${urlApi}/${id}`,
-    method: "GET",
-  })
+  editService(id)
     .then(function (res) {
       var product = res.data;
       // hiện modal
@@ -129,11 +115,7 @@ function updateProduct() {
   console.log(id);
 
   var newProduct = getDataForm();
-  axios({
-    url: `${urlApi}/${id}`,
-    method: "PUT",
-    data: newProduct,
-  })
+  updateService(id,newProduct)
     .then(function (res) {
       var product = res.data;
       // hiện modal
